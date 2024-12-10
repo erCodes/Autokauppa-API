@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Autokauppa_DAL
 {
-    public class Context : DbContext
+    public class Context(DbContextOptions options) : DbContext(options)
     {
+        // Erota Seller info omaksi db setiksi viimeisenä.
         public DbSet<Car> Cars { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder builder)

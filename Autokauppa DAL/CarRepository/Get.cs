@@ -29,7 +29,7 @@ namespace Autokauppa_DAL.CarRepository
 
                 return cars;
             }
-            catch (ArgumentNullException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 return null;

@@ -3,6 +3,7 @@ using static Autokauppa_DAL.CarRepository.Delete;
 using Autokauppa_DAO.QueryObjects;
 using Autokauppa_DAL.CarRepository;
 using Autokauppa_DAL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Autokauppa_API.Controllers
 {
@@ -31,6 +32,10 @@ namespace Autokauppa_API.Controllers
         //    get => delete ??= new Delete(new Context());
         //    set => delete = value;
         //}
+
+
+
+        // Lisää by query. Älä käytä string brand vaan luo tähän oma objekti jossa kaikki optional. DAL layeriin yksi megametodi joka katsoo kaiken ja muut voi sitten poistaa.
 
         [Route("/ByBrand")]
         [HttpGet]

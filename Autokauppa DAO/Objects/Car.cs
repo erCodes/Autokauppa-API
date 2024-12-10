@@ -23,6 +23,7 @@ namespace Autokauppa_DAO.Objects
             Transmission = queryCar.Transmission;
             SafetyFeatures = [];
             OtherFeatures = [];
+            ListedOn = DateTime.Now;
 
             foreach (var safetyF in queryCar.SafetyFeatures)
             {

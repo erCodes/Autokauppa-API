@@ -9,9 +9,9 @@ namespace Autokauppa_DAL.CarRepository
         Delete.Result CarById(string id);
     }
 
-    public class Delete(Context db) : IDelete
+    public class Delete(Context Db) : IDelete
     {
-        public Context Db { get; set; } = db;
+        // Muuta tämä code + result object tyyppisenä ja passaa se object suoraan fronttiin. Sama muihinkin luokkiin.
         public enum Result
         {
             OK,
