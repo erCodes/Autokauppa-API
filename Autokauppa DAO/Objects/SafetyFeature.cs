@@ -3,20 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Autokauppa_DAO.Objects
 {
-    public class SafetyFeature
+    [method: SetsRequiredMembers]
+    public class SafetyFeature(string name)
     {
-        [SetsRequiredMembers]
-        public SafetyFeature(string name)
-        {
-            Id = new Guid().ToString();
-            Name = name;
-        }
-
         [Key]
-        public string Id { get; set; }
+        public string Id { get; set; } = new Guid().ToString();
 
         [MaxLength(50)]
         [Required]
-        public required string Name { get; set; }
+        public required string Name { get; set; } = name;
     }
 }

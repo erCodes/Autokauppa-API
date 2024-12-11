@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using static Autokauppa_DAL.CarRepository.Delete;
+using static Autokauppa_DAO.Objects.Result;
 using Autokauppa_DAO.QueryObjects;
 using Autokauppa_DAL.CarRepository;
-using Autokauppa_DAL;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Autokauppa_API.Controllers
@@ -11,31 +10,22 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class AutokauppaController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
     {
-        //private IGet? get;
-        //private IPost? post;
-        //private IDelete? delete;
-
-        //public IGet Get
-        //{
-        //    get => get ??= new Get(new Context());
-        //    set => get = value;
-        //}
-
-        //public IPost Post
-        //{
-        //    get => post ??= new Post(new Context());
-        //    set => post = value;
-        //}
-
-        //public IDelete Delete
-        //{
-        //    get => delete ??= new Delete(new Context());
-        //    set => delete = value;
-        //}
-
-
-
         // Lisää by query. Älä käytä string brand vaan luo tähän oma objekti jossa kaikki optional. DAL layeriin yksi megametodi joka katsoo kaiken ja muut voi sitten poistaa.
+
+        [Route("/ByQuery")]
+        [HttpGet]
+        public IActionResult ByQuery([FromQuery]Query query)
+        {
+            var result = Get.ByBrand("");
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound("Kusas");
+            }
+        }
 
         [Route("/ByBrand")]
         [HttpGet]
@@ -111,11 +101,11 @@ namespace Autokauppa_API.Controllers
         public IActionResult DeleteCarById([FromQuery] string carId)
         {
             var result = Delete.CarById(carId);
-            if (result == Result.OK)
+            if (result == Status.OK)
             {
                 return Ok();
             }
-            else if (result == Result.NotFound)
+            else if (result == Status.NotFound)
             {
                 return NotFound();
             }

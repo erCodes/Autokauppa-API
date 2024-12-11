@@ -19,6 +19,7 @@ namespace Autokauppa_DAO
             return true;
         }
 
+        //[MemberNotNullWhen(false, nameof(toCheck))]
         public static bool IsWhitespace(this string? toCheck)
         {
             if (string.IsNullOrWhiteSpace(toCheck))

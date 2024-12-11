@@ -31,7 +31,7 @@ namespace Autokauppa_DAO.Objects
                 {
                     continue;
                 }
-                SafetyFeatures.Add(new SafetyFeature(safetyF));
+                //SafetyFeatures.Add(new SafetyFeature(safetyF));
             }
             if (!queryCar.OtherFeatures.Empty())
             {
@@ -41,7 +41,7 @@ namespace Autokauppa_DAO.Objects
                     {
                         continue;
                     }
-                    OtherFeatures.Add(new OtherFeature(otherF));
+                    //OtherFeatures.Add(new OtherFeature(otherF));
                 }
             }
 
@@ -94,10 +94,10 @@ namespace Autokauppa_DAO.Objects
 
         [Required]
         [MaxLength(500)]
-        public List<SafetyFeature> SafetyFeatures { get; set; }
+        public List<string> SafetyFeatures { get; set; }
 
         [MaxLength(500)]
-        public List<OtherFeature> OtherFeatures { get; set; }
+        public List<string> OtherFeatures { get; set; }
 
         [Required]
         [MaxLength(500)]

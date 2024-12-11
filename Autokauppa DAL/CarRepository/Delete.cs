@@ -1,25 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Autokauppa_DAO.Objects;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static Autokauppa_DAO.Objects.Result;
 
 namespace Autokauppa_DAL.CarRepository
 {
     public interface IDelete
     {
-        Delete.Result CarById(string id);
+        Status CarById(string id);
     }
 
     public class Delete(Context Db) : IDelete
     {
         // Muuta tämä code + result object tyyppisenä ja passaa se object suoraan fronttiin. Sama muihinkin luokkiin.
-        public enum Result
-        {
-            OK,
-            NotFound,
-            ServerError
-        }
-
-        public Result CarById(string id)
+        public Status CarById(string id)
         {
             try
             {
@@ -28,18 +23,18 @@ namespace Autokauppa_DAL.CarRepository
                 {
                     Db.Cars.Remove(found);
                     Db.SaveChanges();
-                    return Result.OK;
+                    return Status.OK;
                 }
                 else
                 {
-                    return Result.NotFound;
+                    return Status.NotFound;
                 }
             }
 
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return Result.ServerError;
+                return Status.ServerError;
             }
 
 
