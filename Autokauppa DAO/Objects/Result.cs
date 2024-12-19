@@ -13,7 +13,7 @@ namespace Autokauppa_DAO.Objects
         public enum Status
         {
             OK,
-            NotFound,
+            NoContent,
             ServerError
         }
 

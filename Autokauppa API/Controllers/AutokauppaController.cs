@@ -10,20 +10,22 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class AutokauppaController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
     {
-        // Lisää by query. Älä käytä string brand vaan luo tähän oma objekti jossa kaikki optional. DAL layeriin yksi megametodi joka katsoo kaiken ja muut voi sitten poistaa.
-
         [Route("/ByQuery")]
         [HttpGet]
         public IActionResult ByQuery([FromQuery]Query query)
         {
-            var result = Get.ByBrand("");
-            if (result != null)
+            var result = Get.ByQuery(query);
+            if (result.StatusCode == Status.OK)
             {
-                return Ok(result);
+                return Ok(result.Data);
+            }
+            else if (result.StatusCode == Status.NoContent)
+            {
+                return NoContent();
             }
             else
             {
-                return NotFound("Kusas");
+                return StatusCode(500);
             }
         }
 
@@ -32,13 +34,17 @@ namespace Autokauppa_API.Controllers
         public IActionResult ByBrand([FromQuery]string brand)
         {
             var result = Get.ByBrand(brand);
-            if (result != null)
+            if (result.StatusCode == Status.OK)
             {
-                return Ok(result);
+                return Ok(result.Data);
+            }
+            else if (result.StatusCode == Status.NoContent)
+            {
+                return NoContent();
             }
             else
             {
-                return NotFound("Kusas");
+                return StatusCode(500);
             }
         }
 
@@ -47,45 +53,26 @@ namespace Autokauppa_API.Controllers
         public IActionResult ByBrandAndModel([FromQuery] string brand, string model)
         {
             var result = Get.ByBrandAndModel(brand, model);
-            if (result != null)
+            if (result.StatusCode == Status.OK)
             {
-                return Ok(result);
+                return Ok(result.Data);
+            }
+            else if (result.StatusCode == Status.NoContent)
+            {
+                return NoContent();
             }
             else
             {
-                return NotFound("Kusas");
+                return StatusCode(500);
             }
-        }
-
-        [Route("/ByProductionYear")]
-        [HttpGet]
-        public IActionResult ByProductionYear([FromQuery] string productionYear)
-        {
-            return StatusCode(501);
-
-        }
-
-        [Route("/BySafetyFeature")]
-        [HttpGet]
-        public IActionResult BySafetyFeature([FromQuery] string safetyFeature)
-        {
-            return StatusCode(501);
-
-        }
-
-        [Route("/BySellerName")]
-        [HttpGet]
-        public IActionResult BySellerName([FromQuery] string sellerName)
-        {
-            return StatusCode(501);
-
         }
 
         [Route("/AddNewCar")]
         [HttpPost]
         public IActionResult AddNewCar([FromBody] QueryCar queryCar)
         {
-            if (Post.NewCar(queryCar))
+            var result = Post.NewCar(queryCar);
+            if (result.StatusCode == Status.OK)
             {
                 return Ok();
             }
@@ -93,7 +80,6 @@ namespace Autokauppa_API.Controllers
             {
                 return StatusCode(500);
             }
-
         }
 
         [Route("/DeleteCarById")]
@@ -101,13 +87,13 @@ namespace Autokauppa_API.Controllers
         public IActionResult DeleteCarById([FromQuery] string carId)
         {
             var result = Delete.CarById(carId);
-            if (result == Status.OK)
+            if (result.StatusCode == Status.OK)
             {
                 return Ok();
             }
-            else if (result == Status.NotFound)
+            else if (result.StatusCode == Status.NoContent)
             {
-                return NotFound();
+                return NoContent();
             }
             else
             {

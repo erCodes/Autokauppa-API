@@ -7,19 +7,20 @@ namespace Autokauppa_DAL.CarRepository
 {
     public interface IGet
     {
-        List<Car>? ByBrand(string brand);
-        List<Car>? ByBrandAndModel(string brand, string model);
+        Result ByBrand(string brand);
+        Result ByBrandAndModel(string brand, string model);
+        Result ByQuery(Query query);
     }
 
     public class Get(Context Db) : IGet
     {
         public Result ByQuery(Query query)
         {
-            List<Car> cars = [];
-
-            var test =
+            try
+            {
+                var linqQuery =
                 from c in Db.Cars
-                where (string.IsNullOrWhiteSpace(query.Brand)  || c.Brand == query.Brand)
+                where (string.IsNullOrWhiteSpace(query.Brand) || c.Brand == query.Brand)
                 && (string.IsNullOrWhiteSpace(query.Model) || c.Model == query.Model)
                 && (string.IsNullOrWhiteSpace(query.ProductionYear) || c.ProductionYear == query.ProductionYear)
                 && (string.IsNullOrWhiteSpace(query.EngineSize) || c.EngineSize == query.EngineSize)
@@ -32,68 +33,69 @@ namespace Autokauppa_DAL.CarRepository
                 && (string.IsNullOrWhiteSpace(query.SellerPhoneNumber) || c.SellerInfo.PhoneNumber == query.SellerPhoneNumber)
                 select c;
 
-            var data = test.ToList();
+                var data = linqQuery.ToList();
 
+                if (data.Empty())
+                {
+                    return new Result(Status.NoContent);
+                }
 
-
-
-
-
-
-            if (!query.Brand.IsWhitespace())
-            {
-                var a = Db.Cars.Where(x => x.Brand == query.Brand).ToList();
+                return new Result(Status.OK, data);
             }
-            return null;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new Result(Status.ServerError);
+            }
         }
 
-        public List<Car>? ByBrand(string brand)
+        public Result ByBrand(string brand)
         {
             try
             {
-                var cars = Db.Cars
+                var data = Db.Cars
                     .Where(x => x.Brand == brand)
                     .Include(x => x.SafetyFeatures)
                     .Include(x => x.OtherFeatures)
                     .Include(x => x.SellerInfo)
                     .ToList();
 
-                if (cars.Empty())
+                if (data.Empty())
                 {
-                    return null;
+                    return new Result(Status.NoContent);
                 }
 
-                return cars;
+                return new Result(Status.OK, data);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return null;
+                return new Result(Status.ServerError);
             }
         }
 
-        public List<Car>? ByBrandAndModel(string brand, string model)
+        public Result ByBrandAndModel(string brand, string model)
         {
             try
             {
-                var cars = Db.Cars
+                var data = Db.Cars
                     .Where(x => x.Brand == brand && x.Model == model)
                     .Include(x => x.SafetyFeatures)
                     .Include(x => x.OtherFeatures)
                     .Include(x => x.SellerInfo)
                     .ToList();
 
-                if (cars.Empty())
+                if (data.Empty())
                 {
-                    return null;
+                    return new Result(Status.NoContent);
                 }
 
-                return cars;
+                return new Result(Status.OK, data);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return null;
+                return new Result(Status.ServerError);
             }
         }
     }

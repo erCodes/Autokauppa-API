@@ -21,29 +21,9 @@ namespace Autokauppa_DAO.Objects
             EngineSize = queryCar.EngineSize;
             FuelType = queryCar.FuelType;
             Transmission = queryCar.Transmission;
-            SafetyFeatures = [];
-            OtherFeatures = [];
+            SafetyFeatures = CheckLists(queryCar.SafetyFeatures);
+            OtherFeatures = CheckLists(queryCar.OtherFeatures);
             ListedOn = DateTime.Now;
-
-            foreach (var safetyF in queryCar.SafetyFeatures)
-            {
-                if (safetyF.IsWhitespace())
-                {
-                    continue;
-                }
-                //SafetyFeatures.Add(new SafetyFeature(safetyF));
-            }
-            if (!queryCar.OtherFeatures.Empty())
-            {
-                foreach (var otherF in queryCar.OtherFeatures)
-                {
-                    if (otherF.IsWhitespace())
-                    {
-                        continue;
-                    }
-                    //OtherFeatures.Add(new OtherFeature(otherF));
-                }
-            }
 
             if (existingSellerInfo != null)
             {
@@ -62,6 +42,27 @@ namespace Autokauppa_DAO.Objects
                     Email = queryCar.SellerInfo.Email,
                     PhoneNumber = queryCar.SellerInfo.PhoneNumber,
                 };
+            }
+        }
+
+        public static List<string> CheckLists(List<string> toCheck)
+        {
+            foreach (var safetyF in toCheck)
+            {
+                if (safetyF.IsWhitespace())
+                {
+                    toCheck.Remove(safetyF);
+                    continue;
+                }
+            }
+
+            if (toCheck.Empty())
+            {
+                return [];
+            }
+            else
+            {
+                return toCheck;
             }
         }
 

@@ -8,37 +8,33 @@ namespace Autokauppa_DAL.CarRepository
 {
     public interface IDelete
     {
-        Status CarById(string id);
+        Result CarById(string id);
     }
 
-    public class Delete(Context Db) : IDelete
+    public class Delete(Context db) : IDelete
     {
-        // Muuta tämä code + result object tyyppisenä ja passaa se object suoraan fronttiin. Sama muihinkin luokkiin.
-        public Status CarById(string id)
+        public Result CarById(string id)
         {
             try
             {
-                var found = Db.Cars.FirstOrDefault(x => x.Id == id);
+                var found = db.Cars.FirstOrDefault(x => x.Id == id);
                 if (found != null)
                 {
-                    Db.Cars.Remove(found);
-                    Db.SaveChanges();
-                    return Status.OK;
+                    db.Cars.Remove(found);
+                    db.SaveChanges();
+                    return new Result(Status.OK);
                 }
                 else
                 {
-                    return Status.NotFound;
+                    return new Result(Status.NoContent);
                 }
             }
 
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return Status.ServerError;
+                return new Result(Status.ServerError);
             }
-
-
-
         }
     }
 }

@@ -2,20 +2,20 @@
 using Autokauppa_DAO.Objects;
 using Autokauppa_DAO.QueryObjects;
 using Microsoft.EntityFrameworkCore;
+using static Autokauppa_DAO.Objects.Result;
 
 namespace Autokauppa_DAL.CarRepository
 {
     public interface IPost
     {
-        bool NewCar(QueryCar newCar);
+        Result NewCar(QueryCar newCar);
     }
 
     public class Post(Context db) : IPost
     {
-        public Context Db { get; set; } = db;
-        public bool NewCar(QueryCar newCar)
+        public Result NewCar(QueryCar newCar)
         {
-            var exists = Db.Cars.FirstOrDefault(
+            var exists = db.Cars.FirstOrDefault(
                 x => string.Equals(
                     x.SellerInfo.Name,
                     newCar.SellerInfo.Name,
@@ -34,17 +34,17 @@ namespace Autokauppa_DAL.CarRepository
 
             try
             {
-                Db.Add(newdbEntry);
-                Db.Entry(newdbEntry).State = EntityState.Added;
-                Db.SaveChanges();
+                db.Add(newdbEntry);
+                db.Entry(newdbEntry).State = EntityState.Added;
+                db.SaveChanges();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return new Result(Status.ServerError);
             }
 
-            return true;
+            return new Result(Status.OK);
         }
     }
 }
