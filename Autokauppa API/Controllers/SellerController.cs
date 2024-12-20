@@ -8,7 +8,7 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class SellerController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
     {
-        [Route("/ByQuery")]
+        [Route("/SellersByQuery")]
         [HttpGet]
         public IActionResult ByQuery([FromQuery]QuerySellerInfo sellerInfo)
         {
@@ -53,7 +53,7 @@ namespace Autokauppa_API.Controllers
             var result = Post.NewSeller(sellerInfo);
             if (result.StatusCode == Status.OK)
             {
-                return Ok(result.Data);
+                return Ok();
             }
             else if (result.StatusCode == Status.BadRequest)
             {

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using static Autokauppa_DAO.Objects.Result;
 using Autokauppa_DAO.QueryObjects;
 using Autokauppa_DAL.CarRepository;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Autokauppa_API.Controllers
 {
@@ -75,6 +74,10 @@ namespace Autokauppa_API.Controllers
             if (result.StatusCode == Status.OK)
             {
                 return Ok();
+            }
+            else if (result.StatusCode == Status.BadRequest)
+            {
+                return BadRequest();
             }
             else
             {
