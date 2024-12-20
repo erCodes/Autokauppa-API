@@ -15,26 +15,23 @@ namespace Autokauppa_DAL.CarRepository
     {
         public Result NewCar(QueryCar newCar)
         {
-            var exists = db.Cars.FirstOrDefault(
-                x => string.Equals(
-                    x.SellerInfo.Name,
-                    newCar.SellerInfo.Name,
-                    StringComparison.OrdinalIgnoreCase));
-
-            Car? newdbEntry = null;
-
-            if (exists != null)
-            {
-                newdbEntry = new Car(newCar, exists.SellerInfo);
-            }
-            else
-            {
-                newdbEntry = new Car(newCar);
-            }
-
             try
             {
-                db.Add(newdbEntry);
+                if (newCar.SellerId.IsWhitespace())
+                {
+                    return new Result(Status.BadRequest);
+                }
+
+                var seller = db.SellerInfo.Where(x => x.Id == newCar.SellerId)
+                    .ToList()
+                    .FirstOrDefault();
+                if (seller == null)
+                {
+                    return new Result(Status.BadRequest);
+                }
+
+                var newdbEntry = new Car(newCar);
+                seller.SoldCars.Add(newdbEntry);
                 db.Entry(newdbEntry).State = EntityState.Added;
                 db.SaveChanges();
             }

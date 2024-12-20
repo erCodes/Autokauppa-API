@@ -12,9 +12,10 @@ namespace Autokauppa_DAO.Objects
             OtherFeatures ??= [];
         }
 
-        public Car(QueryCar queryCar, SellerInfo? existingSellerInfo = null)
+        public Car(QueryCar queryCar)
         {
             Id = new Guid().ToString();
+            SellerId = queryCar.SellerId;
             Brand = queryCar.Brand;
             Model = queryCar.Model;
             ProductionYear = queryCar.ProductionYear;
@@ -24,25 +25,6 @@ namespace Autokauppa_DAO.Objects
             SafetyFeatures = CheckLists(queryCar.SafetyFeatures);
             OtherFeatures = CheckLists(queryCar.OtherFeatures);
             ListedOn = DateTime.Now;
-
-            if (existingSellerInfo != null)
-            {
-                if (existingSellerInfo.PhoneNumber.IsWhitespace() && !queryCar.SellerInfo.PhoneNumber.IsWhitespace())
-                {
-                    existingSellerInfo.PhoneNumber = queryCar.SellerInfo.PhoneNumber;
-                }
-                SellerInfo = existingSellerInfo;
-            }
-            else
-            {
-                SellerInfo = new SellerInfo()
-                {
-                    Id = new Guid().ToString(),
-                    Name = queryCar.SellerInfo.Name,
-                    Email = queryCar.SellerInfo.Email,
-                    PhoneNumber = queryCar.SellerInfo.PhoneNumber,
-                };
-            }
         }
 
         public static List<string> CheckLists(List<string> toCheck)
@@ -68,6 +50,10 @@ namespace Autokauppa_DAO.Objects
 
         [Key]
         public string Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string SellerId { get; set; }
 
         [Required]
         [MaxLength(40)]
@@ -99,10 +85,6 @@ namespace Autokauppa_DAO.Objects
 
         [MaxLength(500)]
         public List<string> OtherFeatures { get; set; }
-
-        [Required]
-        [MaxLength(500)]
-        public SellerInfo SellerInfo { get; set; }
 
         [Required]
         public DateTime ListedOn { get; set; }

@@ -12,14 +12,14 @@ namespace Autokauppa_DAL.CarRepository
         Result ByQuery(Query query);
     }
 
-    public class Get(Context Db) : IGet
+    public class Get(Context db) : IGet
     {
         public Result ByQuery(Query query)
         {
             try
             {
-                var linqQuery =
-                from c in Db.Cars
+                var carQuery =
+                from c in db.Cars
                 where (string.IsNullOrWhiteSpace(query.Brand) || c.Brand == query.Brand)
                 && (string.IsNullOrWhiteSpace(query.Model) || c.Model == query.Model)
                 && (string.IsNullOrWhiteSpace(query.ProductionYear) || c.ProductionYear == query.ProductionYear)
@@ -28,13 +28,10 @@ namespace Autokauppa_DAL.CarRepository
                 && (string.IsNullOrWhiteSpace(query.Transmission) || c.Transmission == query.Transmission)
                 && (query.SafetyFeatures.Any() || query.SafetyFeatures.All(x => c.SafetyFeatures.Any(y => y == x)))
                 && (query.OtherFeatures.Any() || query.OtherFeatures.All(x => c.SafetyFeatures.Any(y => y == x)))
-                && (string.IsNullOrWhiteSpace(query.SellerName) || c.SellerInfo.Name == query.SellerName)
-                && (string.IsNullOrWhiteSpace(query.SellerEmail) || c.SellerInfo.Email == query.SellerEmail)
-                && (string.IsNullOrWhiteSpace(query.SellerPhoneNumber) || c.SellerInfo.PhoneNumber == query.SellerPhoneNumber)
+                && (string.IsNullOrWhiteSpace(query.SellerId) || c.SellerId == query.SellerId)
                 select c;
 
-                var data = linqQuery.ToList();
-
+                var data = carQuery.ToList();
                 if (data.Empty())
                 {
                     return new Result(Status.NoContent);
@@ -53,11 +50,11 @@ namespace Autokauppa_DAL.CarRepository
         {
             try
             {
-                var data = Db.Cars
+                var data = db.Cars
                     .Where(x => x.Brand == brand)
                     .Include(x => x.SafetyFeatures)
                     .Include(x => x.OtherFeatures)
-                    .Include(x => x.SellerInfo)
+                    .Include(x => x.SellerId)
                     .ToList();
 
                 if (data.Empty())
@@ -78,11 +75,11 @@ namespace Autokauppa_DAL.CarRepository
         {
             try
             {
-                var data = Db.Cars
+                var data = db.Cars
                     .Where(x => x.Brand == brand && x.Model == model)
                     .Include(x => x.SafetyFeatures)
                     .Include(x => x.OtherFeatures)
-                    .Include(x => x.SellerInfo)
+                    .Include(x => x.SellerId)
                     .ToList();
 
                 if (data.Empty())

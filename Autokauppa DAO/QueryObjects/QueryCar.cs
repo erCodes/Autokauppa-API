@@ -4,6 +4,9 @@ namespace Autokauppa_DAO.QueryObjects
 {
     public class QueryCar
     {
+        [MaxLength(50)]
+        public required string SellerId { get; set; }
+
         [MaxLength(40)]
         public required string Brand { get; set; }
 
@@ -27,8 +30,5 @@ namespace Autokauppa_DAO.QueryObjects
 
         [MaxLength(500)]
         public List<string> OtherFeatures { get; set; } = [];
-
-        [MaxLength(500)]
-        public required QuerySellerInfo SellerInfo { get; set; }
     }
 }

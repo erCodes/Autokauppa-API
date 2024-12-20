@@ -34,12 +34,6 @@ namespace Autokauppa_DAO.QueryObjects
         public List<string> OtherFeatures { get; set; } = [];
 
         [MaxLength(50)]
-        public string? SellerName { get; set; }
-
-        [MaxLength(50)]
-        public string? SellerEmail { get; set; }
-
-        [MaxLength(50)]
-        public string? SellerPhoneNumber { get; set; }
+        public string? SellerId { get; set; }
     }
 }

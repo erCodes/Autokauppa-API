@@ -14,6 +14,7 @@ namespace Autokauppa_DAO.Objects
         {
             OK,
             NoContent,
+            BadRequest,
             ServerError
         }
 

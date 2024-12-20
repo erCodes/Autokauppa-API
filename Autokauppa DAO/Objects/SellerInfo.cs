@@ -17,5 +17,7 @@ namespace Autokauppa_DAO.Objects
 
         [MaxLength(20)]
         public string? PhoneNumber { get; set; }
+
+        public List<Car> SoldCars { get; set; }
     }
 }

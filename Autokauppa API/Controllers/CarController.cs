@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Autokauppa_API.Controllers
 {
-    [Route("AutokauppaAPI")]
+    [Route("AutokauppaAPI/Car")]
     [ApiController]
-    public class AutokauppaController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
+    public class CarController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
     {
         [Route("/ByQuery")]
         [HttpGet]
