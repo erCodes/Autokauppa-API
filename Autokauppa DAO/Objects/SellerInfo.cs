@@ -1,9 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Autokauppa_DAO.QueryObjects;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Autokauppa_DAO.Objects
 {
     public class SellerInfo
     {
+        [SetsRequiredMembers]
+        public SellerInfo(QuerySellerInfo querySeller)
+        {
+            Id = new Guid().ToString();
+            Name = querySeller.Name;
+            Email = querySeller.Email;
+            PhoneNumber = querySeller.PhoneNumber;
+            SoldCars = [];
+        }
+
         [Key]
         public string Id { get; set; }
 

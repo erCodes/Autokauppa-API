@@ -34,14 +34,14 @@ namespace Autokauppa_DAL.CarRepository
                 seller.SoldCars.Add(newdbEntry);
                 db.Entry(newdbEntry).State = EntityState.Added;
                 db.SaveChanges();
+
+                return new Result(Status.OK);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return new Result(Status.ServerError);
             }
-
-            return new Result(Status.OK);
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Autokauppa_DAO;
 using Autokauppa_DAO.Objects;
 using Autokauppa_DAO.QueryObjects;
+using Microsoft.EntityFrameworkCore;
 using static Autokauppa_DAO.Objects.Result;
 
 namespace Autokauppa_DAL.SellerRepository
 {
     public interface IGet
     {
+        Result AllSellers(bool includeCars);
         Result ByQuery(QuerySellerInfo query);
     }
 
@@ -24,6 +26,36 @@ namespace Autokauppa_DAL.SellerRepository
                 select s;
 
                 var data = sellerQuery.ToList();
+                if (data.Empty())
+                {
+                    return new Result(Status.NoContent);
+                }
+
+                return new Result(Status.OK, data);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new Result(Status.ServerError);
+            }
+        }
+
+        public Result AllSellers(bool includeCars)
+        {
+            try
+            {
+                List<SellerInfo> data = [];
+
+                if (includeCars)
+                {
+                    data = db.SellerInfo.Include(x => x.SoldCars).ToList();
+                }
+
+                else
+                {
+                    data = db.SellerInfo.ToList();
+                }
+
                 if (data.Empty())
                 {
                     return new Result(Status.NoContent);
