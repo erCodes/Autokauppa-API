@@ -6,7 +6,7 @@ namespace Autokauppa_DAO.Objects
     {
         public OtherFeature(string name)
         {
-            Id = new Guid().ToString();
+            Id = Guid.NewGuid().ToString();
             Name = name;
         }
 

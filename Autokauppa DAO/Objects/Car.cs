@@ -14,7 +14,7 @@ namespace Autokauppa_DAO.Objects
 
         public Car(QueryCar queryCar)
         {
-            Id = new Guid().ToString();
+            Id = Guid.NewGuid().ToString();
             SellerId = queryCar.SellerId;
             Brand = queryCar.Brand;
             Model = queryCar.Model;

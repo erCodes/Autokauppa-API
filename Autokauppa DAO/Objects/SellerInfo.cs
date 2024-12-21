@@ -6,10 +6,14 @@ namespace Autokauppa_DAO.Objects
 {
     public class SellerInfo
     {
+        public SellerInfo()
+        {
+        }
+
         [SetsRequiredMembers]
         public SellerInfo(QuerySellerInfo querySeller)
         {
-            Id = new Guid().ToString();
+            Id = Guid.NewGuid().ToString();
             Name = querySeller.Name;
             Email = querySeller.Email;
             PhoneNumber = querySeller.PhoneNumber;

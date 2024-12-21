@@ -7,7 +7,7 @@ namespace Autokauppa_DAO.Objects
     public class SafetyFeature(string name)
     {
         [Key]
-        public string Id { get; set; } = new Guid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [MaxLength(50)]
         [Required]
