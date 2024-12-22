@@ -17,13 +17,7 @@ namespace Autokauppa_DAL.CarRepository
         {
             try
             {
-                if (newCar.SellerId.IsWhitespace())
-                {
-                    return new Result(Status.BadRequest);
-                }
-
                 var seller = db.SellerInfo.Where(x => x.Id == newCar.SellerId)
-                    .ToList()
                     .FirstOrDefault();
                 if (seller == null)
                 {
@@ -33,7 +27,6 @@ namespace Autokauppa_DAL.CarRepository
                 var newdbEntry = new Car(newCar);
                 seller.SoldCars ??= [];
                 seller.SoldCars.Add(newdbEntry);
-                db.Entry(newdbEntry).State = EntityState.Added;
                 db.SaveChanges();
 
                 return new Result(Status.OK);

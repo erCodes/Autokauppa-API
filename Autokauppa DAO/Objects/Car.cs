@@ -6,6 +6,7 @@ namespace Autokauppa_DAO.Objects
 {
     public class Car
     {
+        // Muuta ListedOn UpdatedON
         public Car()
         {
             SafetyFeatures ??= [];
@@ -52,15 +53,7 @@ namespace Autokauppa_DAO.Objects
                     continue;
                 }
             }
-
-            if (toCheck.Empty())
-            {
-                return [];
-            }
-            else
-            {
-                return toCheck;
-            }
+            return toCheck;
         }
 
         [Key]

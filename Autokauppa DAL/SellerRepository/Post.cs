@@ -17,7 +17,6 @@ namespace Autokauppa_DAL.SellerRepository
             try
             {
                 var exists = db.SellerInfo.Where(x => x.Name == querySeller.Name)
-                    .ToList()
                     .FirstOrDefault();
 
                 if (exists != null)
@@ -27,7 +26,7 @@ namespace Autokauppa_DAL.SellerRepository
 
                 var newDbEntry = new SellerInfo(querySeller);
                 db.SellerInfo.Add(newDbEntry);
-                db.Entry(newDbEntry).State = EntityState.Added;
+                //db.Entry(newDbEntry).State = EntityState.Added;
                 db.SaveChanges();
 
                 return new Result(Status.OK);

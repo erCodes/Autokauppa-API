@@ -9,6 +9,7 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class CarController(IGet Get, IPost Post, IPut Put, IDelete Delete) : ControllerBase
     {
+        // Siivoa kaikki state muutokset pois.
         [Route("/ByQuery")]
         [HttpGet]
         public IActionResult ByQuery([FromQuery]Query query)
@@ -87,7 +88,7 @@ namespace Autokauppa_API.Controllers
 
         [Route("/UpdateCar")]
         [HttpPut]
-        public IActionResult UpdateCar([FromQuery]CarUpdateInfo update)
+        public IActionResult UpdateCar([FromBody]CarUpdateInfo update)
         {
             var result = Put.UpdateCar(update);
             if (result.StatusCode == Status.OK)
