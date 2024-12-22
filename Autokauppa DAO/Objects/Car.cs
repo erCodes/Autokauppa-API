@@ -27,6 +27,21 @@ namespace Autokauppa_DAO.Objects
             ListedOn = DateTime.Now;
         }
 
+        public Car(Car current, CarUpdateInfo update)
+        {
+            Id = current.Id;
+            SellerId = current.SellerId;
+            Brand = update.Brand ??= string.Empty;
+            Model = update.Model ??= string.Empty;
+            ProductionYear = update.ProductionYear ??= string.Empty;
+            EngineSize = update.EngineSize ??= string.Empty;
+            FuelType = update.FuelType ??= string.Empty;
+            Transmission = update.Transmission ??= string.Empty;
+            SafetyFeatures = CheckLists(update.SafetyFeatures);
+            OtherFeatures = CheckLists(update.OtherFeatures);
+            ListedOn = DateTime.Now;
+        }
+
         public static List<string> CheckLists(List<string> toCheck)
         {
             foreach (var safetyF in toCheck)

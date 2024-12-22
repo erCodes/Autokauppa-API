@@ -31,6 +31,7 @@ namespace Autokauppa_DAL.CarRepository
                 }
 
                 var newdbEntry = new Car(newCar);
+                seller.SoldCars ??= [];
                 seller.SoldCars.Add(newdbEntry);
                 db.Entry(newdbEntry).State = EntityState.Added;
                 db.SaveChanges();

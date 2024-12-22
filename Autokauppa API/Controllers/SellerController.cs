@@ -2,11 +2,12 @@
 using Autokauppa_DAL.SellerRepository;
 using Autokauppa_DAO.QueryObjects;
 using static Autokauppa_DAO.Objects.Result;
+using Autokauppa_DAO.Objects;
 namespace Autokauppa_API.Controllers
 {
     [Route("AutokauppaAPI/Seller")]
     [ApiController]
-    public class SellerController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
+    public class SellerController(IGet Get, IPost Post, IPut Put, IDelete Delete) : ControllerBase
     {
         [Route("/SellersByQuery")]
         [HttpGet]
@@ -58,6 +59,25 @@ namespace Autokauppa_API.Controllers
             else if (result.StatusCode == Status.BadRequest)
             {
                 return BadRequest(result.Data);
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Route("/UpdateSeller")]
+        [HttpPut]
+        public IActionResult UpdateSeller([FromQuery]string sellerId, QuerySellerInfo sellerInfo)
+        {
+            var result = Put.UpdateSeller(sellerId, sellerInfo);
+            if (result.StatusCode == Status.OK)
+            {
+                return Ok(result.Data);
+            }
+            else if (result.StatusCode == Status.NoContent)
+            {
+                return NoContent();
             }
             else
             {

@@ -7,7 +7,7 @@ namespace Autokauppa_API.Controllers
 {
     [Route("AutokauppaAPI/Car")]
     [ApiController]
-    public class CarController(IGet Get, IPost Post, IDelete Delete) : ControllerBase
+    public class CarController(IGet Get, IPost Post, IPut Put, IDelete Delete) : ControllerBase
     {
         [Route("/ByQuery")]
         [HttpGet]
@@ -78,6 +78,25 @@ namespace Autokauppa_API.Controllers
             else if (result.StatusCode == Status.BadRequest)
             {
                 return BadRequest();
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Route("/UpdateCar")]
+        [HttpPut]
+        public IActionResult UpdateCar([FromQuery]CarUpdateInfo update)
+        {
+            var result = Put.UpdateCar(update);
+            if (result.StatusCode == Status.OK)
+            {
+                return Ok(result.Data);
+            }
+            else if (result.StatusCode == Status.NoContent)
+            {
+                return NoContent();
             }
             else
             {

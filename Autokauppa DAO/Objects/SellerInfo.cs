@@ -20,6 +20,16 @@ namespace Autokauppa_DAO.Objects
             SoldCars = [];
         }
 
+        [SetsRequiredMembers]
+        public SellerInfo(SellerInfo current, QuerySellerInfo update)
+        {
+            Id = current.Id;
+            Name = update.Name;
+            Email = update.Email;
+            PhoneNumber = update.PhoneNumber;
+            SoldCars = current.SoldCars;
+        }
+
         [Key]
         public string Id { get; set; }
 

@@ -8,9 +8,9 @@ namespace Autokauppa_DAO.QueryObjects
         public required string Name { get; set; }
 
         [MaxLength(50)]
-        public required string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [MaxLength(20)]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }
