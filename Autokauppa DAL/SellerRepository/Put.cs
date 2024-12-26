@@ -25,7 +25,6 @@ namespace Autokauppa_DAL.SellerRepository
                 }
 
                 seller = new SellerInfo(seller, update);
-                db.Entry(seller).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return new Result(Status.OK, seller);

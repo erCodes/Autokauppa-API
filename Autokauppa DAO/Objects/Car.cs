@@ -6,7 +6,6 @@ namespace Autokauppa_DAO.Objects
 {
     public class Car
     {
-        // Muuta ListedOn UpdatedON
         public Car()
         {
             SafetyFeatures ??= [];
@@ -25,7 +24,7 @@ namespace Autokauppa_DAO.Objects
             Transmission = queryCar.Transmission;
             SafetyFeatures = CheckLists(queryCar.SafetyFeatures);
             OtherFeatures = CheckLists(queryCar.OtherFeatures);
-            ListedOn = DateTime.Now;
+            UpdatedOn = DateTime.Now;
         }
 
         public Car(Car current, CarUpdateInfo update)
@@ -40,7 +39,7 @@ namespace Autokauppa_DAO.Objects
             Transmission = update.Transmission ??= string.Empty;
             SafetyFeatures = CheckLists(update.SafetyFeatures);
             OtherFeatures = CheckLists(update.OtherFeatures);
-            ListedOn = DateTime.Now;
+            UpdatedOn = DateTime.Now;
         }
 
         public static List<string> CheckLists(List<string> toCheck)
@@ -95,6 +94,6 @@ namespace Autokauppa_DAO.Objects
         public List<string> OtherFeatures { get; set; }
 
         [Required]
-        public DateTime ListedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
     }
 }

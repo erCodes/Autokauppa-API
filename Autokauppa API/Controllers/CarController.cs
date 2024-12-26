@@ -9,7 +9,6 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class CarController(IGet Get, IPost Post, IPut Put, IDelete Delete) : ControllerBase
     {
-        // Siivoa kaikki state muutokset pois.
         [Route("/ByQuery")]
         [HttpGet]
         public IActionResult ByQuery([FromQuery]Query query)
@@ -29,9 +28,9 @@ namespace Autokauppa_API.Controllers
             }
         }
 
-        [Route("/ByBrand")]
+        [Route("/ByBrand/{brand}")]
         [HttpGet]
-        public IActionResult ByBrand([FromQuery]string brand)
+        public IActionResult ByBrand([FromRoute]string brand)
         {
             var result = Get.ByBrand(brand);
             if (result.StatusCode == Status.OK)
@@ -48,9 +47,9 @@ namespace Autokauppa_API.Controllers
             }
         }
 
-        [Route("/ByBrandAndModel")]
+        [Route("/ByBrandAndModel/{brand}/{model}")]
         [HttpGet]
-        public IActionResult ByBrandAndModel([FromQuery] string brand, string model)
+        public IActionResult ByBrandAndModel([FromRoute] string brand, string model)
         {
             var result = Get.ByBrandAndModel(brand, model);
             if (result.StatusCode == Status.OK)
@@ -86,11 +85,11 @@ namespace Autokauppa_API.Controllers
             }
         }
 
-        [Route("/UpdateCar")]
+        [Route("/UpdateCar/{carId}")]
         [HttpPut]
-        public IActionResult UpdateCar([FromBody]CarUpdateInfo update)
+        public IActionResult UpdateCar([FromRoute]string carId, CarUpdateInfo update)
         {
-            var result = Put.UpdateCar(update);
+            var result = Put.UpdateCar(carId, update);
             if (result.StatusCode == Status.OK)
             {
                 return Ok(result.Data);
@@ -105,9 +104,9 @@ namespace Autokauppa_API.Controllers
             }
         }
 
-        [Route("/DeleteCarById")]
+        [Route("/DeleteCarById/{carId}")]
         [HttpDelete]
-        public IActionResult DeleteCarById([FromQuery] string carId)
+        public IActionResult DeleteCarById([FromRoute] string carId)
         {
             var result = Delete.CarById(carId);
             if (result.StatusCode == Status.OK)

@@ -9,9 +9,6 @@ namespace Autokauppa_DAO.QueryObjects
 {
     public class CarUpdateInfo
     {
-        [MaxLength(50)]
-        public required string CarId { get; set; }
-
         [MaxLength(40)]
         public string? Brand { get; set; }
 

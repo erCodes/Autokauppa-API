@@ -1,9 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Autokauppa_DAO.QueryObjects
 {
     public class QueryCar
     {
+        [SetsRequiredMembers]
+        public QueryCar(string sellerId, string brand, string model, string productionYear, string engineSize, string fuelType, string transmission, List<string> safetyFeatures, List<string> otherFeatures)
+        {
+            SellerId = sellerId;
+            Brand = brand;
+            Model = model;
+            ProductionYear = productionYear;
+            EngineSize = engineSize;
+            FuelType = fuelType;
+            Transmission = transmission;
+            SafetyFeatures = safetyFeatures;
+            OtherFeatures = otherFeatures;
+        }
+
         [MaxLength(50)]
         public required string SellerId { get; set; }
 

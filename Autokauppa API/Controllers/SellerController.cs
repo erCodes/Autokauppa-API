@@ -12,7 +12,7 @@ namespace Autokauppa_API.Controllers
         // Ota put metodista mallia ja lisää sama autoon ja deleteihin molemmissa
         [Route("/SellersByQuery")]
         [HttpGet]
-        public IActionResult ByQuery([FromQuery]QuerySellerInfo sellerInfo)
+        public IActionResult ByQuery([FromQuery] QuerySellerInfo sellerInfo)
         {
             var result = Get.ByQuery(sellerInfo);
             if (result.StatusCode == Status.OK)
@@ -31,7 +31,7 @@ namespace Autokauppa_API.Controllers
 
         [Route("/AllSellers")]
         [HttpGet]
-        public IActionResult AllSellers([FromQuery]bool includeCars)
+        public IActionResult AllSellers([FromQuery] bool includeCars)
         {
             var result = Get.AllSellers(includeCars);
             if (result.StatusCode == Status.OK)
@@ -50,7 +50,7 @@ namespace Autokauppa_API.Controllers
 
         [Route("/NewSeller")]
         [HttpPost]
-        public IActionResult NewSeller([FromQuery]QuerySellerInfo sellerInfo)
+        public IActionResult NewSeller([FromQuery] QuerySellerInfo sellerInfo)
         {
             var result = Post.NewSeller(sellerInfo);
             if (result.StatusCode == Status.OK)
@@ -69,7 +69,7 @@ namespace Autokauppa_API.Controllers
 
         [Route("/UpdateSeller/{sellerId}")]
         [HttpPut]
-        public IActionResult UpdateSeller([FromRoute]string sellerId, QuerySellerInfo sellerInfo)
+        public IActionResult UpdateSeller([FromRoute] string sellerId, QuerySellerInfo sellerInfo)
         {
             var result = Put.UpdateSeller(sellerId, sellerInfo);
             if (result.StatusCode == Status.OK)
@@ -86,9 +86,9 @@ namespace Autokauppa_API.Controllers
             }
         }
 
-        [Route("/SellerById")]
+        [Route("/SellerById/{sellerId}")]
         [HttpDelete]
-        public IActionResult SellerById([FromQuery]string sellerId)
+        public IActionResult SellerById([FromRoute]string sellerId)
         {
             var result = Delete.SellerById(sellerId);
             if (result.StatusCode == Status.OK)
