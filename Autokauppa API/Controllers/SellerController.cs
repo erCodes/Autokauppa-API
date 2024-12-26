@@ -9,7 +9,6 @@ namespace Autokauppa_API.Controllers
     [ApiController]
     public class SellerController(IGet Get, IPost Post, IPut Put, IDelete Delete) : ControllerBase
     {
-        // Ota put metodista mallia ja lisää sama autoon ja deleteihin molemmissa
         [Route("/SellersByQuery")]
         [HttpGet]
         public IActionResult ByQuery([FromQuery] QuerySellerInfo sellerInfo)

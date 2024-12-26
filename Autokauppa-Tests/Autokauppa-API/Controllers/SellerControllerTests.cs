@@ -1,21 +1,22 @@
-﻿using Moq;
-using NUnit.Framework; 
+﻿using Autokauppa_API.Controllers;
+using Autokauppa_DAL.SellerRepository;
+using Autokauppa_DAO.Objects;
+using Autokauppa_DAO.QueryObjects;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Autokauppa_DAL.CarRepository;
-using Autokauppa_DAO.Objects;
+using System.Threading.Tasks;
 using static Autokauppa_DAO.Objects.Result;
-using Autokauppa_DAO.QueryObjects;
-using Autokauppa_API.Controllers;
 using Assert = NUnit.Framework.Assert;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Autokauppa_Tests.Autokauppa_API.Controllers
 {
     [TestFixture]
-    public class CarControllerTests
+    public class SellerControllerTests
     {
         MockRepository Repository { get; set; }
         Mock<IGet> Get { get; set; }
@@ -33,18 +34,18 @@ namespace Autokauppa_Tests.Autokauppa_API.Controllers
             Delete = Repository.Create<IDelete>();
         }
 
-        private CarController Create()
+        private SellerController Create()
             => new(Get.Object, Post.Object, Put.Object, Delete.Object);
 
         [TestCase(Status.OK)]
         [TestCase(Status.NoContent)]
         public void ByQuery(Status status)
         {
-            var query = new Query();
-            Get.Setup(x => x.ByQuery(query)).Returns(new Result(status));
+            var sellerInfo = new QuerySellerInfo("");
+            Get.Setup(x => x.ByQuery(sellerInfo)).Returns(new Result(status));
 
             var controller = Create();
-            var result = controller.ByQuery(query);
+            var result = controller.ByQuery(sellerInfo);
             Repository.VerifyAll();
             Assert.That(result, Is.Not.Null);
 
@@ -60,36 +61,12 @@ namespace Autokauppa_Tests.Autokauppa_API.Controllers
 
         [TestCase(Status.OK)]
         [TestCase(Status.NoContent)]
-        public void ByBrand(Status status)
+        public void AllSellers(Status status)
         {
-            string brand = "Toyota";
-            Get.Setup(x => x.ByBrand(brand)).Returns(new Result(status));
+            Get.Setup(x => x.AllSellers(true)).Returns(new Result(status));
 
             var controller = Create();
-            var result = controller.ByBrand(brand);
-            Repository.VerifyAll();
-            Assert.That(result, Is.Not.Null);
-
-            if (status == Status.OK)
-            {
-                Assert.That(result, Is.TypeOf<OkObjectResult>());
-            }
-            else if (status == Status.NoContent)
-            {
-                Assert.That(result, Is.TypeOf<NoContentResult>());
-            }
-        }
-
-        [TestCase(Status.OK)]
-        [TestCase(Status.NoContent)]
-        public void ByBrandAndModel(Status status)
-        {
-            string brand = "Toyota";
-            string model = "Corolla";
-            Get.Setup(x => x.ByBrandAndModel(brand, model)).Returns(new Result(status));
-
-            var controller = Create();
-            var result = controller.ByBrandAndModel(brand, model);
+            var result = controller.AllSellers(true);
             Repository.VerifyAll();
             Assert.That(result, Is.Not.Null);
 
@@ -105,13 +82,13 @@ namespace Autokauppa_Tests.Autokauppa_API.Controllers
 
         [TestCase(Status.OK)]
         [TestCase(Status.BadRequest)]
-        public void AddNewCar(Status status)
+        public void NewSeller(Status status)
         {
-            var queryCar = new QueryCar("", "", "", "", "", "", "", [], []);
-            Post.Setup(x => x.NewCar(queryCar)).Returns(new Result(status));
+            var sellerInfo = new QuerySellerInfo("");
+            Post.Setup(x => x.NewSeller(sellerInfo)).Returns(new Result(status));
 
             var controller = Create();
-            var result = controller.AddNewCar(queryCar);
+            var result = controller.NewSeller(sellerInfo);
             Repository.VerifyAll();
             Assert.That(result, Is.Not.Null);
 
@@ -121,20 +98,21 @@ namespace Autokauppa_Tests.Autokauppa_API.Controllers
             }
             else if (status == Status.BadRequest)
             {
-                Assert.That(result, Is.TypeOf<BadRequestResult>());
+                Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
             }
         }
 
         [TestCase(Status.OK)]
         [TestCase(Status.NoContent)]
-        public void UpdateCar(Status status)
+        public void UpdateSeller(Status status)
         {
-            string carId = Guid.NewGuid().ToString();
-            var carUpdateInfo = new CarUpdateInfo();
-            Put.Setup(x => x.UpdateCar(carId, carUpdateInfo)).Returns(new Result(status));
+            string sellerId = Guid.NewGuid().ToString();
+            var sellerInfo = new QuerySellerInfo("");
+            Put.Setup(x => x.UpdateSeller(sellerId, sellerInfo))
+                .Returns(new Result(status));
 
             var controller = Create();
-            var result = controller.UpdateCar(carId, carUpdateInfo);
+            var result = controller.UpdateSeller(sellerId, sellerInfo);
             Repository.VerifyAll();
             Assert.That(result, Is.Not.Null);
 
@@ -150,13 +128,13 @@ namespace Autokauppa_Tests.Autokauppa_API.Controllers
 
         [TestCase(Status.OK)]
         [TestCase(Status.NoContent)]
-        public void DeleteCarById(Status status)
+        public void DeleteSellerById(Status status)
         {
-            string carId = Guid.NewGuid().ToString();
-            Delete.Setup(x => x.CarById(carId)).Returns(new Result(status));
+            string sellerId = Guid.NewGuid().ToString();
+            Delete.Setup(x => x.SellerById(sellerId)).Returns(new Result(status));
 
             var controller = Create();
-            var result = controller.DeleteCarById(carId);
+            var result = controller.SellerById(sellerId);
             Repository.VerifyAll();
             Assert.That(result, Is.Not.Null);
 
