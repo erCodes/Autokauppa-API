@@ -26,8 +26,8 @@ namespace Autokauppa_DAL.CarRepository
                 && (string.IsNullOrWhiteSpace(query.EngineSize) || c.EngineSize == query.EngineSize)
                 && (string.IsNullOrWhiteSpace(query.FuelType) || c.FuelType == query.FuelType)
                 && (string.IsNullOrWhiteSpace(query.Transmission) || c.Transmission == query.Transmission)
-                && (query.SafetyFeatures.Any() || query.SafetyFeatures.All(x => c.SafetyFeatures.Any(y => y == x)))
-                && (query.OtherFeatures.Any() || query.OtherFeatures.All(x => c.SafetyFeatures.Any(y => y == x)))
+                && (query.SafetyFeatures.All(x => c.SafetyFeatures.Any(y => y == x)))
+                && (query.OtherFeatures.All(x => c.OtherFeatures.Any(y => y == x)))
                 && (string.IsNullOrWhiteSpace(query.SellerId) || c.SellerId == query.SellerId)
                 select c;
 

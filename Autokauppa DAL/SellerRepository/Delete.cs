@@ -1,4 +1,5 @@
-﻿using Autokauppa_DAO.Objects;
+﻿using Autokauppa_DAO;
+using Autokauppa_DAO.Objects;
 using Microsoft.EntityFrameworkCore;
 using static Autokauppa_DAO.Objects.Result;
 
@@ -21,6 +22,10 @@ namespace Autokauppa_DAL.SellerRepository
 
                 if (found != null)
                 {
+                    if (!found.SoldCars.Empty())
+                    {
+                        db.Cars.RemoveRange(found.SoldCars);
+                    }
                     db.SellerInfo.Remove(found);
                     db.SaveChanges();
                     return new Result(Status.OK);

@@ -22,11 +22,11 @@ builder.Services.AddScoped<Autokauppa_DAL.SellerRepository.IDelete, Autokauppa_D
 builder.Services.AddSqlServer<Context>("Server=(localdb)\\mssqllocaldb;Database=AutokauppaDb;Trusted_Connection=true;MultipleActiveResultSets=true");
 
 var app = builder.Build();
+app.UseSwagger();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 
