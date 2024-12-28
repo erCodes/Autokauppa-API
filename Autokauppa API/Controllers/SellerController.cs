@@ -2,7 +2,6 @@
 using Autokauppa_DAL.SellerRepository;
 using Autokauppa_DAO.QueryObjects;
 using static Autokauppa_DAO.Objects.Result;
-using Autokauppa_DAO.Objects;
 namespace Autokauppa_API.Controllers
 {
     [Route("AutokauppaAPI/Seller")]

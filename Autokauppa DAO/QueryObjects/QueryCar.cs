@@ -3,47 +3,34 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Autokauppa_DAO.QueryObjects
 {
-    public class QueryCar
+    [method: SetsRequiredMembers]
+    public class QueryCar(string sellerId, string brand, string model, string productionYear, string engineSize, string fuelType, string transmission, List<string> safetyFeatures, List<string> otherFeatures)
     {
-        [SetsRequiredMembers]
-        public QueryCar(string sellerId, string brand, string model, string productionYear, string engineSize, string fuelType, string transmission, List<string> safetyFeatures, List<string> otherFeatures)
-        {
-            SellerId = sellerId;
-            Brand = brand;
-            Model = model;
-            ProductionYear = productionYear;
-            EngineSize = engineSize;
-            FuelType = fuelType;
-            Transmission = transmission;
-            SafetyFeatures = safetyFeatures;
-            OtherFeatures = otherFeatures;
-        }
-
         [MaxLength(50)]
-        public required string SellerId { get; set; }
+        public required string SellerId { get; set; } = sellerId;
 
         [MaxLength(40)]
-        public required string Brand { get; set; }
+        public required string Brand { get; set; } = brand;
 
         [MaxLength(40)]
-        public required string Model { get; set; }
+        public required string Model { get; set; } = model;
 
         [MaxLength(4)]
-        public required string ProductionYear { get; set; }
+        public required string ProductionYear { get; set; } = productionYear;
 
         [MaxLength(5)]
-        public required string EngineSize { get; set; }
+        public required string EngineSize { get; set; } = engineSize;
 
         [MaxLength(20)]
-        public required string FuelType { get; set; }
+        public required string FuelType { get; set; } = fuelType;
 
         [MaxLength(20)]
-        public required string Transmission { get; set; }
+        public required string Transmission { get; set; } = transmission;
 
         [MaxLength(500)]
-        public required List<string> SafetyFeatures { get; set; }
+        public required List<string> SafetyFeatures { get; set; } = safetyFeatures;
 
         [MaxLength(500)]
-        public List<string> OtherFeatures { get; set; } = [];
+        public List<string> OtherFeatures { get; set; } = otherFeatures;
     }
 }

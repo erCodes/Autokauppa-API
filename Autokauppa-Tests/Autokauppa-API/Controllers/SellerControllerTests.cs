@@ -8,8 +8,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Autokauppa_DAO.Objects.Result;
 using Assert = NUnit.Framework.Assert;
 

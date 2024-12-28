@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Autokauppa_DAL.CarRepository;
 using Autokauppa_DAO.Objects;
 using static Autokauppa_DAO.Objects.Result;
