@@ -42,9 +42,6 @@ namespace Autokauppa_DAL.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime>("ListedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -77,6 +74,9 @@ namespace Autokauppa_DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

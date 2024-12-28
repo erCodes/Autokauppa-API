@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Autokauppa_DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241220234002_InitialCreate")]
+    [Migration("20241228012205_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,9 +44,6 @@ namespace Autokauppa_DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<DateTime>("ListedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -80,6 +77,9 @@ namespace Autokauppa_DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

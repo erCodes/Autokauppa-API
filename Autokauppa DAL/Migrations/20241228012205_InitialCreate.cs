@@ -39,7 +39,7 @@ namespace Autokauppa_DAL.Migrations
                     Transmission = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     SafetyFeatures = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     OtherFeatures = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    ListedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SellerInfoId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
