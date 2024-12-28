@@ -3,16 +3,27 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Autokauppa_DAO.QueryObjects
 {
-    [method: SetsRequiredMembers]
-    public class QuerySellerInfo(string name, string? email = null, string? phoneNumber = null)
+    public class QuerySellerInfo
     {
-        [MaxLength(50)]
-        public required string Name { get; set; } = name;
+        public QuerySellerInfo()
+        {
+        }
+
+        [SetsRequiredMembers]
+        public QuerySellerInfo(string name, string? email = null, string? phoneNumber = null)
+        {
+            Name = name;
+            Email = email ?? string.Empty;
+            PhoneNumber = phoneNumber ?? string.Empty;
+        }
 
         [MaxLength(50)]
-        public string Email { get; set; } = email ?? string.Empty;
+        public required string Name { get; set; }
+
+        [MaxLength(50)]
+        public string Email { get; set; } = string.Empty;
 
         [MaxLength(20)]
-        public string PhoneNumber { get; set; } = phoneNumber ?? string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }
