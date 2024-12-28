@@ -1,4 +1,5 @@
 ﻿using Autokauppa_DAO.Objects;
+using Microsoft.EntityFrameworkCore;
 using static Autokauppa_DAO.Objects.Result;
 
 namespace Autokauppa_DAL.SellerRepository
@@ -14,7 +15,10 @@ namespace Autokauppa_DAL.SellerRepository
         {
             try
             {
-                var found = db.SellerInfo.FirstOrDefault(x => x.Id == id);
+                var found = db.SellerInfo
+                    .Include(x => x.SoldCars)
+                    .FirstOrDefault(y => y.Id == id);
+
                 if (found != null)
                 {
                     db.SellerInfo.Remove(found);

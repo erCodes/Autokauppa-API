@@ -49,6 +49,10 @@ namespace Autokauppa_DAO.Objects
                 if (safetyF.IsWhitespace())
                 {
                     toCheck.Remove(safetyF);
+                    if (toCheck.Empty())
+                    {
+                        return [];
+                    }
                     continue;
                 }
             }

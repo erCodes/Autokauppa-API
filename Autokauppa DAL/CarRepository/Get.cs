@@ -52,9 +52,6 @@ namespace Autokauppa_DAL.CarRepository
             {
                 var data = db.Cars
                     .Where(x => x.Brand == brand)
-                    .Include(x => x.SafetyFeatures)
-                    .Include(x => x.OtherFeatures)
-                    .Include(x => x.SellerId)
                     .ToList();
 
                 if (data.Empty())
@@ -77,9 +74,6 @@ namespace Autokauppa_DAL.CarRepository
             {
                 var data = db.Cars
                     .Where(x => x.Brand == brand && x.Model == model)
-                    .Include(x => x.SafetyFeatures)
-                    .Include(x => x.OtherFeatures)
-                    .Include(x => x.SellerId)
                     .ToList();
 
                 if (data.Empty())
