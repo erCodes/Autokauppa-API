@@ -9,6 +9,22 @@ namespace Autokauppa_DAO.QueryObjects
 {
     public class CarUpdateInfo
     {
+        public CarUpdateInfo()
+        {
+        }
+
+        public CarUpdateInfo(string? brand, string? model, string? productionYear, string? engineSize, string? fuelType, string? transmission, List<string> safetyFeatures, List<string> otherFeatures)
+        {
+            Brand = brand;
+            Model = model;
+            ProductionYear = productionYear;
+            EngineSize = engineSize;
+            FuelType = fuelType;
+            Transmission = transmission;
+            SafetyFeatures = safetyFeatures;
+            OtherFeatures = otherFeatures;
+        }
+
         [MaxLength(40)]
         public string? Brand { get; set; }
 

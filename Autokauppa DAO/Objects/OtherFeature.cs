@@ -2,16 +2,10 @@
 
 namespace Autokauppa_DAO.Objects
 {
-    public class OtherFeature
+    public class OtherFeature(string name)
     {
-        public OtherFeature(string name)
-        {
-            Id = Guid.NewGuid().ToString();
-            Name = name;
-        }
-
         [Key]
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Name { get; set; } = name;
     }
 }
