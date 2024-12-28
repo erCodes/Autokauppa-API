@@ -17,13 +17,14 @@ namespace Autokauppa_DAL.CarRepository
         {
             try
             {
-                var car = db.Cars.FirstOrDefault(x => x.Id == id);
+                var car = db.Cars.AsNoTracking().FirstOrDefault(x => x.Id == id);
                 if (car == null)
                 {
                     return new Result(Status.NoContent);
                 }
 
                 car = new Car(car, update);
+                db.Update(car);
                 db.SaveChanges();
 
                 return new Result(Status.OK, car);

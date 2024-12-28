@@ -17,6 +17,7 @@ namespace Autokauppa_DAL.SellerRepository
             try
             {
                 var seller = db.SellerInfo
+                    .AsNoTracking()
                     .Include(x => x.SoldCars)
                     .FirstOrDefault(y => y.Id == id);
                 if (seller == null)
@@ -25,6 +26,7 @@ namespace Autokauppa_DAL.SellerRepository
                 }
 
                 seller = new SellerInfo(seller, update);
+                db.Update(seller);
                 db.SaveChanges();
 
                 return new Result(Status.OK, seller);
