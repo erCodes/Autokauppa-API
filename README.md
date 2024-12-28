@@ -1,4 +1,4 @@
-# Autokauppa-API - CarDealership-API
+# Autokauppa API - CarDealership API
 
 Car Dealerhip API is ASP.NET Core API where you can search, add, modify and delete sellers and their cars. Application uses Entity Framework core and Microsoft SQL Server to handle data.
 
